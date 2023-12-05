@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GruppBParkeringshuset
-build_property.ProjectDir = C:\Users\rajol\source\repos\GruppBParkeringshuset\GruppBParkeringshuset\
+build_property.ProjectDir = C:\Users\anton\OneDrive\Documents\GitHub\GruppBParkering\GruppBParkeringshuset\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

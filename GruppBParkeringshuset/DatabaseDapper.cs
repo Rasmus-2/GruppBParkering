@@ -3,6 +3,7 @@ using GruppBParkeringshuset.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,8 @@ namespace GruppBParkeringshuset
 {
     internal class DatabaseDapper
     {
-        static string connString = "data source=.\\SQLEXPRESS; initial catalog = Parking10; persist security info = True; Integrated Security = True;";
+        //Kolla SQLEXPRESS Namnet om det inte funkar
+        static string connString = "data source=.\\SQLEXPRESS05; initial catalog = Parking10; persist security info = True; Integrated Security = True;"; 
         public static List<Models.City> GetAllCities()
         {
             string sql = "SELECT * FROM CITIES";
@@ -56,23 +58,34 @@ namespace GruppBParkeringshuset
             return affectedRows;
         }
 
-        public static List<Models.ParkingSlots> GetParkingSlots()
+        public static int InsertParkingSlot(Models.ParkingSlots parkingSlots)
+        {
+            int affectedRows = 0;
+            string sql = $"INSERT INTO ParkingSlots(SlotNumber, ElectricOutlet, ParkingHouseId) VALUES ('{parkingSlots.SlotNumber}', '{parkingSlots.ElectricOutlet}', '{parkingSlots.ParkingHouseId}')";
+            using ( var connection = new SqlConnection(connString))
+            {
+                affectedRows = connection.Execute(sql);
+            }
+            return affectedRows;
+        }
+        public static List<Models.AllSpots> GetParkingSlots()
         {
             string sql2 = @"
-                SELECT 
+                SELECT                     
                     COUNT(*) AS PlatserPerHus,
                         ph.HouseName,
                     STRING_AGG(ps.SlotNumber, ', ') AS Slots
                 FROM ParkingHouses ph
                 JOIN ParkingSlots ps ON ph.Id = ps.ParkingHouseId
                 GROUP BY ph.HouseName
+                
 
     ";
             string sql = "SELECT * FROM ParkingSlots";
-            List<Models.ParkingSlots> parkingSlots = new List<ParkingSlots>();
+            List<Models.AllSpots> parkingSlots = new List<AllSpots>();
             using (var connection = new SqlConnection(connString))
             {
-                parkingSlots = connection.Query<Models.ParkingSlots>(sql).ToList();
+                parkingSlots = connection.Query<Models.AllSpots>(sql2).ToList();
             }
             return parkingSlots;
         }
