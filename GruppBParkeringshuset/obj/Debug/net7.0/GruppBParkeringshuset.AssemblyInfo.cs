@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GruppBParkeringshuset")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a8e9678f920db48dd05259d57c1cc527d4cd1a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("GruppBParkeringshuset")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GruppBParkeringshuset")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

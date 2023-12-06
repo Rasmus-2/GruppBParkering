@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GruppBParkeringshuset
@@ -16,7 +17,15 @@ namespace GruppBParkeringshuset
         static string connString = "data source=.\\SQLEXPRESS05; initial catalog = Parking10; persist security info = True; Integrated Security = True;"; 
         public static List<Models.City> GetAllCities()
         {
-            string sql = "SELECT * FROM CITIES";
+            string sql = @"SELECT
+                c.Id, c.CityName,
+                SUM(CAST(ps.ElectricOutlet AS INT)) AS ElectricOutletCount
+                FROM Cities c
+                JOIN ParkingHouses ph ON c.Id = ph.CityId
+                JOIN ParkingSlots ps ON ph.id = ps.ParkingHouseId
+                GROUP BY c.Id, c.CityName
+        ";
+            
             List<Models.City> cities = new List<Models.City>();
             using (var connection = new SqlConnection(connString))
             {
@@ -71,13 +80,15 @@ namespace GruppBParkeringshuset
         public static List<Models.AllSpots> GetParkingSlots()
         {
             string sql2 = @"
-                SELECT                     
+                SELECT   
+                    ph.Id AS Id,
                     COUNT(*) AS PlatserPerHus,
                         ph.HouseName,
-                    STRING_AGG(ps.SlotNumber, ', ') AS Slots
+                    STRING_AGG(ps.SlotNumber, ', ') AS Slots,
+                    SUM(CAST(ps.ElectricOutlet AS INT)) AS ElectricOutletCount 
                 FROM ParkingHouses ph
                 JOIN ParkingSlots ps ON ph.Id = ps.ParkingHouseId
-                GROUP BY ph.HouseName
+                GROUP BY ph.HouseName, ph.Id
                 
 
     ";
@@ -89,5 +100,11 @@ namespace GruppBParkeringshuset
             }
             return parkingSlots;
         }
+
+        //public static int GetElectricOutlets()
+        //{
+        //    string sql = @"SELECT ElectricOutlet FROM ParkingSlots WHERE ElectricOutlet = 1";
+
+        //}
     }
 }

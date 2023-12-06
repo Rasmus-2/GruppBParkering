@@ -14,5 +14,7 @@ namespace GruppBParkeringshuset.Models
 
         public string Slots { get; set; }
 
+        public int ElectricOutletCount { get; set; }
+
     }
 }

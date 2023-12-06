@@ -42,7 +42,8 @@ namespace GruppBParkeringshuset
                         foreach (Models.City city in cities)
                         {
                             Console.Write(city.Id + " ");
-                            Console.WriteLine(city.CityName);
+                            Console.Write(city.CityName);
+                            Console.WriteLine(", Electric Outlets: " + city.ElectricOutletCount);
                         }
                         Thread.Sleep(2000);
                         break;
@@ -82,7 +83,8 @@ namespace GruppBParkeringshuset
                         {
                             Console.Write("Housename: "+ parkingSlot.HouseName);
                             Console.Write(", Number of slots: " + parkingSlot.Slots);
-                            Console.WriteLine(", Spots per house: " + parkingSlot.PlatserPerHus);
+                            Console.Write(", Spots per house: " + parkingSlot.PlatserPerHus);
+                            Console.WriteLine(", Electric Outlets: " + parkingSlot.ElectricOutletCount);
                             //Console.WriteLine(", Parking house id: " + parkingSlot.ParkingHouseId);
                         }
                         Thread.Sleep(5000);
